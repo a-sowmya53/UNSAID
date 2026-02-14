@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsaid - Anonymous Emotional Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #FFF4FB;
+            --bg-secondary: #FCE7F3;
+            --bg-card: #FFFFFF;
+            --accent: #C084FC;
+            --accent-hover: #F472B6;
+            --text-primary: #4C1D95;
+            --text-secondary: #6D28D9;
+            --text-muted: #A78BFA;
+            --border: #F3E8FF;
+            --success: #34D399;
+            --warning: #FBBF24;
+            --danger: #F87171;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: url('Sunset.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.6);
+            /* adjust opacity here */
+            z-index: -1;
+        }
+
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(167, 139, 250, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(96, 165, 250, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Login Page */
+        .login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeSlideUp 0.6s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            font-weight: normal;
+            color: #C084FC;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-shadow: 0 8px 30px rgba(244, 114, 182, 0.3);
+            -webkit-text-stroke: 0.3px #C084FC;
+        }
+
+        .logo p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #C084FC, #F472B6);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(244, 114, 182, 0.3);
+
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(167, 139, 250, 0.4);
+        }
+
+        @keyframes floatGlow {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .toggle-auth {
+            text-align: center;
+            margin-top: 24px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .toggle-auth a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-auth a:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Main App */
+        .main-app {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .header {
+            background: var(--bg-card);
+            padding: 20px 32px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            font-weight: normal;
+            color: #C084FC;
+            letter-spacing: 1px;
+            text-shadow: 0 8px 30px rgba(244, 114, 182, 0.3);
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: 10px;
+            color: #F87171;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(248, 113, 113, 0.2);
+        }
+
+        /* Mood Section */
+        .mood-section {
+            background: var(--bg-card);
+            padding: 32px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .mood-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .mood-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .mood-btn {
+            padding: 12px 20px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mood-btn:hover {
+            border-color: var(--accent);
+            background: rgba(167, 139, 250, 0.05);
+        }
+
+        .mood-btn.active {
+            border-color: var(--accent);
+            background: rgba(167, 139, 250, 0.15);
+            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+        }
+
+        .vent-box {
+            margin-bottom: 20px;
+        }
+
+        .vent-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 18px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .vent-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+        }
+
+        .vent-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .char-counter {
+            text-align: right;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        .category-dropdown {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-dropdown:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.1);
+        }
+
+        /* Feed Section */
+        .category-nav {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 12px 0;
+            margin-bottom: 24px;
+            scrollbar-width: none;
+        }
+
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab:hover {
+            border-color: var(--accent);
+            background: rgba(167, 139, 250, 0.05);
+        }
+
+        .category-tab.active {
+            border-color: var(--accent);
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--text-primary);
+        }
+
+        /* Vent Cards */
+        .feed {
+            display: grid;
+            gap: 20px;
+        }
+
+        .vent-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.15);
+            transition: all 0.3s ease;
+            animation: fadeSlideUp 0.5s ease-out;
+        }
+
+        .vent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(192, 132, 252, 0.25);
+        }
+
+        .vent-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .mood-emoji {
+            font-size: 1.5rem;
+        }
+
+        .category-tag {
+            padding: 6px 14px;
+            background: rgba(167, 139, 250, 0.15);
+            border-radius: 20px;
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .anonymous-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        .vent-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .vent-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .reactions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .reaction-btn {
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .reaction-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        .reaction-btn.active {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: var(--accent);
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .reaction-btn:hover .tooltip {
+            opacity: 1;
+        }
+
+        .support-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .support-btn {
+            padding: 8px 16px;
+            background: rgba(167, 139, 250, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 10px;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .support-btn:hover {
+            background: rgba(167, 139, 250, 0.2);
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        /* Support Messages */
+        .support-messages {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .support-message {
+            padding: 12px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            animation: fadeSlideUp 0.3s ease-out;
+        }
+
+        .support-message-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .support-message-author {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        /* Message Input */
+        .message-input-container {
+            margin-top: 12px;
+            animation: fadeSlideUp 0.3s ease-out;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            resize: none;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .cancel-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .send-btn {
+            padding: 8px 16px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Floating Chat Icon */
+        .chat-icon {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #C4B5FD);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(167, 139, 250, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .chat-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 28px rgba(167, 139, 250, 0.5);
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 24px;
+            height: 24px;
+            background: #EF4444;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Chat Panel */
+        .chat-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-card);
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+            transition: right 0.4s ease;
+            z-index: 101;
+            overflow-y: auto;
+        }
+
+        .chat-panel.open {
+            right: 0;
+        }
+
+        .chat-panel-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            z-index: 10;
+        }
+
+        .chat-panel-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-panel {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-panel:hover {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: #F87171;
+            color: #F87171;
+        }
+
+        .chat-tabs {
+            display: flex;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+            position: sticky;
+            top: 73px;
+            z-index: 9;
+        }
+
+        .chat-tab {
+            padding: 16px 20px;
+            color: var(--text-muted);
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .chat-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .chat-content {
+            padding: 24px;
+        }
+
+        .chat-item {
+            padding: 16px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-item:hover {
+            background: rgba(167, 139, 250, 0.05);
+        }
+
+        .chat-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .chat-item-title {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .chat-timer {
+            color: var(--warning);
+            font-size: 0.8rem;
+        }
+
+        .chat-item-preview {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Private Chat Window */
+        .private-chat {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
+            height: 70vh;
+            background: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            z-index: 102;
+        }
+
+        .private-chat.open {
+            display: flex;
+            animation: fadeScale 0.3s ease-out;
+        }
+
+        @keyframes fadeScale {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .chat-window-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 16px;
+            animation: fadeSlideUp 0.3s ease-out;
+        }
+
+        .message-sender {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message-bubble.sent {
+            background: rgba(167, 139, 250, 0.15);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-bubble.received {
+            background: var(--bg-primary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-text-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .chat-text-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .chat-send-btn {
+            padding: 12px 24px;
+            background: var(--accent);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .message-count {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 99;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            display: none;
+            animation: slideInRight 0.4s ease-out;
+            z-index: 200;
+            max-width: 350px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--accent);
+        }
+
+        .notification-message {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #4C1D95;
+
+            background: rgba(255, 255, 255, 0.55);
+            /* translucent white */
+            backdrop-filter: blur(10px);
+            /* glass blur */
+            -webkit-backdrop-filter: blur(10px);
+
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(192, 132, 252, 0.25);
+
+            max-width: 500px;
+            margin: 40px auto;
+        }
+
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            animation: floatGlow 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chat-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .private-chat {
+                width: 95%;
+                height: 80vh;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .mood-section,
+            .header {
+                padding: 20px;
+            }
+
+            .vent-card {
+                padding: 16px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ===== Custom Dropdown ===== */
+
+        .custom-dropdown {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            font-size: 14px;
+            color: #4C1D95;
+        }
+
+        .dropdown-selected {
+            padding: 12px 16px;
+            border: 1.5px solid rgba(192, 132, 252, 0.6);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-selected:hover {
+            border-color: #C084FC;
+            box-shadow: 0 0 14px rgba(192, 132, 252, 0.4);
+        }
+
+        .dropdown-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .custom-dropdown.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            width: 100%;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.25);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .custom-dropdown.active .dropdown-options {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(192, 132, 252, 0.2);
+        }
+
+        /* ===== Forgot Password Styling ===== */
+
+        .forgot-box {
+            margin-top: 20px;
+            padding: 24px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.2);
+            animation: fadeSlideUp 0.4s ease;
+        }
+
+        .forgot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .forgot-header h3 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .close-forgot {
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .close-forgot:hover {
+            color: var(--danger);
+        }
+
+        .forgot-message {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page">
+        <div class="login-container">
+            <div class="logo">
+                <h1>Unsaid</h1>
+                <p>Your safe space for emotional support</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <p style="margin-top:10px; font-size:0.85rem; text-align:right;">
+                        <a href="#" onclick="showForgotPassword()" style="color:#A78BFA; text-decoration:none;">
+                            Forgot Password?
+                        </a>
+                    </p>
+                    <p id="authError" style="color:#F87171; font-size:0.85rem; margin-top:8px;"></p>
+                </div>
+
+                <button type="submit" class="btn">Sign In</button>
+            </form>
+            <div id="forgotBox" class="forgot-box hidden">
+                <div class="forgot-header">
+                    <h3>Reset Your Password</h3>
+                    <span onclick="hideForgotPassword()" class="close-forgot">✕</span>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="forgotEmail" placeholder="Enter your registered email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="newPassword" placeholder="Enter new password" required>
+                </div>
+
+                <button onclick="resetPassword()" class="btn">Reset Password</button>
+
+                <p id="forgotMessage" class="forgot-message"></p>
+            </div>
+
+
+            <div class="toggle-auth">
+                <span>Don't have an account? </span>
+                <a onclick="toggleAuthMode()">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" class="main-app">
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <h1>Unsaid</h1>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <!-- Mood Section -->
+            <div class="mood-section">
+                <h2 class="mood-title">What's your mood today?</h2>
+
+                <div class="mood-selector" id="moodSelector">
+                    <button class="mood-btn" data-mood="sad">😔 Sad</button>
+                    <button class="mood-btn" data-mood="stressed">😟 Stressed</button>
+                    <button class="mood-btn" data-mood="angry">😡 Angry</button>
+                    <button class="mood-btn" data-mood="confused">🌫 Confused</button>
+                    <button class="mood-btn" data-mood="overwhelmed">🌧 Overwhelmed</button>
+                    <button class="mood-btn" data-mood="hopeful">🌱 Hopeful</button>
+                    <button class="mood-btn" data-mood="calm">🙂 Calm</button>
+                </div>
+
+                <div class="vent-box">
+                    <textarea id="ventTextarea" class="vent-textarea" maxlength="500"
+                        placeholder="Share what's on your heart. You're safe here."></textarea>
+                    <div class="char-counter">
+                        <span id="charCount">0</span> / 500
+                    </div>
+                </div>
+
+                <div class="custom-dropdown" id="categoryDropdown">
+                    <div class="dropdown-selected">
+                        Select a category
+                        <span class="dropdown-arrow">▾</span>
+                    </div>
+
+                    <div class="dropdown-options">
+                        <div class="dropdown-item" data-value="Academic Stress">📚 Academic Stress</div>
+                        <div class="dropdown-item" data-value="Personal Feelings">🌿 Personal Feelings</div>
+                        <div class="dropdown-item" data-value="Anger">🔥 Anger</div>
+                        <div class="dropdown-item" data-value="Confusion">💭 Confusion</div>
+                        <div class="dropdown-item" data-value="Seeking Guidance">🌅 Seeking Guidance</div>
+                        <div class="dropdown-item" data-value="Loneliness">🌙 Loneliness</div>
+                        <div class="dropdown-item" data-value="Family Issues">🏠 Family Issues</div>
+                        <div class="dropdown-item" data-value="Self-Doubt">🌊 Self-Doubt</div>
+                    </div>
+                </div>
+
+
+                <button class="btn" onclick="postVent()">Post Anonymously</button>
+            </div>
+
+            <!-- Category Navigation -->
+            <div class="category-nav" id="categoryNav">
+                <button class="category-tab active" data-category="all">All</button>
+                <button class="category-tab" data-category="academic">📚 Academic Stress</button>
+                <button class="category-tab" data-category="personal">🌿 Personal Feelings</button>
+                <button class="category-tab" data-category="anger">🔥 Anger</button>
+                <button class="category-tab" data-category="confusion">🌫 Confusion</button>
+                <button class="category-tab" data-category="guidance">🌅 Seeking Guidance</button>
+                <button class="category-tab" data-category="loneliness">🌙 Loneliness</button>
+                <button class="category-tab" data-category="family">🏡 Family Issues</button>
+                <button class="category-tab" data-category="self-doubt">🌊 Self-Doubt</button>
+            </div>
+
+            <!-- Feed -->
+            <div class="feed" id="feed"></div>
+        </div>
+    </div>
+
+    <!-- Floating Chat Icon -->
+    <div class="chat-icon hidden" id="chatIcon" onclick="toggleChatPanel()">
+        💬
+        <div class="chat-badge hidden" id="chatBadge">3</div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-panel-header">
+            <h2 class="chat-panel-title">Messages</h2>
+            <button class="close-panel" onclick="toggleChatPanel()">✕</button>
+        </div>
+
+        <div class="chat-tabs">
+            <div class="chat-tab active" onclick="switchChatTab('reactions')">Reactions & Support</div>
+            <div class="chat-tab" onclick="switchChatTab('chats')">Active Chats</div>
+        </div>
+
+        <div class="chat-content" id="chatContent">
+            <!-- Content will be populated by JS -->
+        </div>
+    </div>
+
+    <!-- Private Chat Window -->
+    <div class="private-chat" id="privateChat">
+        <div class="chat-window-header">
+            <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">Private Support Chat</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                    Expires in: <span id="chatTimer" style="color: var(--warning);">23:45:12</span>
+                </div>
+            </div>
+            <button class="close-panel" onclick="closePrivateChat()">✕</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be populated by JS -->
+        </div>
+
+        <div class="chat-input-area">
+            <div class="chat-input-wrapper">
+                <input type="text" id="chatTextInput" class="chat-text-input" placeholder="Type your message..."
+                    onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                <button class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+            </div>
+            <div class="message-count">
+                <span id="messageCount">0</span> / 30 messages
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeOverlay()"></div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-title" id="notificationTitle"></div>
+        <div class="notification-message" id="notificationMessage"></div>
+    </div>
+
+    <script>
+        // Global State
+        let selectedCategory = "";
+
+        let currentUser = null;
+        let selectedMood = null;
+        let currentCategory = 'all';
+        let vents = [];
+        let currentChatId = null;
+        let messagesSent = 0;
+
+        // Mood emojis mapping
+        const moodEmojis = {
+            sad: '😔',
+            stressed: '😟',
+            angry: '😡',
+            confused: '🌫',
+            overwhelmed: '🌧',
+            hopeful: '🌱',
+            calm: '🙂'
+        };
+
+        // Category labels
+        const categoryLabels = {
+            academic: '📚 Academic Stress',
+            personal: '🌿 Personal Feelings',
+            anger: '🔥 Anger',
+            confusion: '🌫 Confusion',
+            guidance: '🌅 Seeking Guidance',
+            loneliness: '🌙 Loneliness',
+            family: '🏡 Family Issues',
+            'self-doubt': '🌊 Self-Doubt'
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            loadSampleVents();
+            setupCustomDropdown();
+        });
+
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+            // Mood selector
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedMood = this.dataset.mood;
+                });
+            });
+
+            // Character counter
+            document.getElementById('ventTextarea').addEventListener('input', function () {
+                document.getElementById('charCount').textContent = this.value.length;
+            });
+
+            // Category navigation
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.dataset.category;
+                    filterVents();
+                });
+            });
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('authError');
+            const buttonText = document.querySelector('#loginForm .btn').textContent;
+
+            error.textContent = "";
+
+            // SIGN UP MODE
+            if (buttonText === "Sign Up") {
+
+                if (localStorage.getItem(email)) {
+                    error.textContent = "Account already exists. Please sign in.";
+                    return;
+                }
+
+                if (password.length < 6) {
+                    error.textContent = "Password must be at least 6 characters.";
+                    return;
+                }
+
+                localStorage.setItem(email, password);
+                error.style.color = "#34D399";
+                error.textContent = "Account created successfully! Now sign in.";
+
+                toggleAuthMode();
+                document.getElementById('password').value = "";
+                return;
+            }
+
+            // SIGN IN MODE
+            const storedPassword = localStorage.getItem(email);
+
+            if (!storedPassword) {
+                error.textContent = "Account does not exist. Please sign up.";
+                return;
+            }
+
+            if (storedPassword !== password) {
+                error.textContent = "Incorrect password.";
+                return;
+            }
+
+            // SUCCESS LOGIN
+            currentUser = { email };
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            document.getElementById('chatIcon').classList.remove('hidden');
+
+            showNotification('Welcome!', 'You are now in a safe space.');
+        }
+
+        function showForgotPassword() {
+            document.getElementById('forgotBox').classList.remove('hidden');
+        }
+
+        function hideForgotPassword() {
+            document.getElementById('forgotBox').classList.add('hidden');
+        }
+
+
+        function resetPassword() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            const newPassword = document.getElementById('newPassword').value;
+            const message = document.getElementById('forgotMessage');
+
+            message.textContent = "";
+            message.style.color = "#F87171";
+
+            const storedPassword = localStorage.getItem(email);
+
+            if (!storedPassword) {
+                message.textContent = "Account not found.";
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                message.textContent = "Password must be at least 6 characters.";
+                return;
+            }
+
+            localStorage.setItem(email, newPassword);
+
+            message.style.color = "#34D399";
+            message.textContent = "Password reset successful! You can now login.";
+
+            document.getElementById('forgotEmail').value = "";
+            document.getElementById('newPassword').value = "";
+        }
+
+        function toggleAuthMode() {
+            const form = document.getElementById('loginForm');
+            const button = form.querySelector('.btn');
+            const toggle = document.querySelector('.toggle-auth');
+
+            if (button.textContent === 'Sign In') {
+                button.textContent = 'Sign Up';
+                toggle.innerHTML = '<span>Already have an account? </span><a onclick="toggleAuthMode()">Sign In</a>';
+            } else {
+                button.textContent = 'Sign In';
+                toggle.innerHTML = '<span>Don\'t have an account? </span><a onclick="toggleAuthMode()">Sign Up</a>';
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('chatIcon').classList.add('hidden');
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function postVent() {
+            const content = document.getElementById('ventTextarea').value.trim();
+            const category = selectedCategory;
+
+
+            if (!content) {
+                showNotification('Oops!', 'Please share what\'s on your mind.');
+                return;
+            }
+
+            if (!category) {
+                showNotification('Oops!', 'Please select a category.');
+                return;
+            }
+
+            if (!selectedMood) {
+                showNotification('Oops!', 'Please select your mood.');
+                return;
+            }
+
+            const vent = {
+                id: Date.now(),
+                content,
+                category,
+                mood: selectedMood,
+                timestamp: new Date(),
+                reactions: {},
+                supportMessages: [],
+                chatRequests: []
+            };
+
+            vents.unshift(vent);
+
+            // Clear form
+            document.getElementById('ventTextarea').value = '';
+            document.getElementById('categorySelect').value = '';
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+            selectedMood = null;
+            document.getElementById('charCount').textContent = '0';
+
+            renderVents();
+            showNotification('Posted!', 'Your feelings have been shared anonymously.');
+        }
+
+        function loadSampleVents() {
+            vents = [
+                {
+                    id: 1,
+                    content: "I feel so overwhelmed with exams coming up. I don't know if I can handle the pressure anymore. Every time I try to study, my mind just goes blank.",
+                    category: 'academic',
+                    mood: 'stressed',
+                    timestamp: new Date(Date.now() - 3600000),
+                    reactions: { heart: 5, alone: 3, strong: 2 },
+                    supportMessages: [
+                        { text: "You've got this! Take it one step at a time. Remember to breathe.", author: "Anonymous" }
+                    ],
+                    chatRequests: []
+                },
+                {
+                    id: 2,
+                    content: "Sometimes I feel like nobody really understands what I'm going through. It's lonely being in my own head.",
+                    category: 'loneliness',
+                    mood: 'sad',
+                    timestamp: new Date(Date.now() - 7200000),
+                    reactions: { alone: 8, heart: 4 },
+                    supportMessages: [],
+                    chatRequests: []
+                },
+                {
+                    id: 3,
+                    content: "I'm angry at myself for not being good enough. Why can't I just be better at things?",
+                    category: 'self-doubt',
+                    mood: 'angry',
+                    timestamp: new Date(Date.now() - 10800000),
+                    reactions: { strong: 6, matter: 3 },
+                    supportMessages: [
+                        { text: "You are enough. Comparison is the thief of joy. Your journey is your own.", author: "Anonymous" }
+                    ],
+                    chatRequests: []
+                }
+            ];
+
+            renderVents();
+        }
+
+        function renderVents() {
+            const feed = document.getElementById('feed');
+            const filteredVents = currentCategory === 'all'
+                ? vents
+                : vents.filter(v => v.category === currentCategory);
+
+            if (filteredVents.length === 0) {
+                feed.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🌙</div>
+                        <div>No posts in this category yet.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            feed.innerHTML = filteredVents.map(vent => `
+                <div class="vent-card">
+                    <div class="vent-header">
+                        <span class="mood-emoji">${moodEmojis[vent.mood]}</span>
+                        <span class="category-tag">${categoryLabels[vent.category]}</span>
+                        <span class="anonymous-label">Shared by Anonymous</span>
+                    </div>
+                    
+                    <div class="vent-content">${vent.content}</div>
+                    
+                    <div class="vent-footer">
+                        <div class="reactions">
+                            ${createReactionButton('💛', 'I hear you.', vent.id, 'heart', vent.reactions.heart || 0)}
+                            ${createReactionButton('🤍', 'You are not alone.', vent.id, 'alone', vent.reactions.alone || 0)}
+                            ${createReactionButton('🌱', 'Stay strong.', vent.id, 'strong', vent.reactions.strong || 0)}
+                            ${createReactionButton('✨', 'Your feelings matter.', vent.id, 'matter', vent.reactions.matter || 0)}
+                            ${createReactionButton('🤗', 'Sending warmth.', vent.id, 'warmth', vent.reactions.warmth || 0)}
+                        </div>
+                        
+                        <div class="support-actions">
+                            <button class="support-btn" onclick="toggleSupportMessage(${vent.id})">💬 Support</button>
+                            <button class="support-btn" onclick="requestPrivateChat(${vent.id})">🔒 Private</button>
+                        </div>
+                        
+                        <span class="timestamp">${formatTime(vent.timestamp)}</span>
+                    </div>
+                    
+                    ${vent.supportMessages.length > 0 ? `
+                        <div class="support-messages">
+                            ${vent.supportMessages.map(msg => `
+                                <div class="support-message">
+                                    <div class="support-message-text">${msg.text}</div>
+                                    <div class="support-message-author">— ${msg.author}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    <div id="messageInput${vent.id}" class="message-input-container hidden">
+                        <textarea class="message-input" placeholder="Share an encouraging message..." rows="2"></textarea>
+                        <div class="message-actions">
+                            <button class="cancel-btn" onclick="toggleSupportMessage(${vent.id})">Cancel</button>
+                            <button class="send-btn" onclick="sendSupportMessage(${vent.id})">Send</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function createReactionButton(emoji, tooltip, ventId, type, count) {
+            return `
+                <button class="reaction-btn" onclick="addReaction(${ventId}, '${type}')">
+                    ${emoji}${count > 0 ? ` <span style="background:#F472B6;color:white;padding:2px 8px;border-radius:12px;font-size:0.75rem;margin-left:4px;">${count}</span>` : ''}
+                    <div class="tooltip">${tooltip}</div>
+                </button>
+            `;
+        }
+
+        function addReaction(ventId, type) {
+            const vent = vents.find(v => v.id === ventId);
+            if (!vent.reactions[type]) vent.reactions[type] = 0;
+            vent.reactions[type]++;
+
+            renderVents();
+
+            // Check for boost notifications
+            const totalReactions = Object.values(vent.reactions).reduce((a, b) => a + b, 0);
+            if (totalReactions === 10) {
+                showNotification('Your words touched others', 'You are not alone. ❤️');
+            } else if (totalReactions === 20) {
+                showNotification('Many hearts resonated', 'Your story matters to many. 🌟');
+            }
+        }
+
+        function toggleSupportMessage(ventId) {
+            const input = document.getElementById(`messageInput${ventId}`);
+            input.classList.toggle('hidden');
+        }
+
+        function sendSupportMessage(ventId) {
+            const input = document.querySelector(`#messageInput${ventId} .message-input`);
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            const vent = vents.find(v => v.id === ventId);
+            vent.supportMessages.push({
+                text,
+                author: 'Anonymous'
+            });
+
+            input.value = '';
+            renderVents();
+            showNotification('Sent!', 'Your support has been shared.');
+        }
+
+        function requestPrivateChat(ventId) {
+            currentChatId = ventId;
+            messagesSent = 0;
+            document.getElementById('privateChat').classList.add('open');
+            document.getElementById('overlay').classList.add('active');
+
+            // Simulate initial message
+            setTimeout(() => {
+                const messages = document.getElementById('chatMessages');
+                messages.innerHTML = `
+                    <div class="chat-message">
+                        <div class="message-sender">Supporter</div>
+                        <div class="message-bubble received">
+                            Hi, I saw your post and wanted to reach out. How are you holding up?
+                        </div>
+                    </div>
+                `;
+            }, 500);
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatTextInput');
+            const text = input.value.trim();
+
+            if (!text || messagesSent >= 30) return;
+
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message';
+            messageDiv.innerHTML = `
+                <div class="message-sender">You</div>
+                <div class="message-bubble sent">${text}</div>
+            `;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+
+            input.value = '';
+            messagesSent++;
+            document.getElementById('messageCount').textContent = messagesSent;
+
+            if (messagesSent >= 30) {
+                showNotification('Message Limit', 'You\'ve reached the 30 message limit for this chat.');
+            }
+        }
+
+        function closePrivateChat() {
+            document.getElementById('privateChat').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function toggleChatPanel() {
+            document.getElementById('chatPanel').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+            updateChatContent();
+        }
+
+        function switchChatTab(tab) {
+            document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            updateChatContent();
+        }
+
+        function updateChatContent() {
+            const content = document.getElementById('chatContent');
+            const activeTab = document.querySelector('.chat-tab.active');
+
+            if (activeTab.textContent.includes('Reactions')) {
+                content.innerHTML = `
+                    <div class="chat-item">
+                        <div class="chat-item-header">
+                            <div class="chat-item-title">New Reactions</div>
+                        </div>
+                        <div class="chat-item-preview">5 people resonated with your post about feeling overwhelmed</div>
+                    </div>
+                    <div class="chat-item">
+                        <div class="chat-item-header">
+                            <div class="chat-item-title">Support Message</div>
+                        </div>
+                        <div class="chat-item-preview">"You've got this! Take it one step at a time..."</div>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div class="chat-item" onclick="requestPrivateChat(1)">
+                        <div class="chat-item-header">
+                            <div class="chat-item-title">Active Chat</div>
+                            <div class="chat-timer">⏱ 23:45:12</div>
+                        </div>
+                        <div class="chat-item-preview">Supporting someone about academic stress...</div>
+                    </div>
+                `;
+            }
+        }
+
+        function filterVents() {
+            renderVents();
+        }
+
+        function closeOverlay() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('chatPanel').classList.remove('open');
+            closePrivateChat();
+        }
+
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notificationTitle').textContent = title;
+            document.getElementById('notificationMessage').textContent = message;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        function formatTime(date) {
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000);
+
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+            return `${Math.floor(diff / 86400)}d ago`;
+        }
+
+        // Simulate chat timer countdown
+        setInterval(() => {
+            const timer = document.getElementById('chatTimer');
+            if (timer) {
+                const parts = timer.textContent.split(':');
+                let hours = parseInt(parts[0]);
+                let minutes = parseInt(parts[1]);
+                let seconds = parseInt(parts[2]);
+
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                    }
+                }
+
+                timer.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+
+        function setupCustomDropdown() {
+            const dropdown = document.getElementById("categoryDropdown");
+            if (!dropdown) return;
+
+            const selected = dropdown.querySelector(".dropdown-selected");
+            const options = dropdown.querySelectorAll(".dropdown-item");
+
+            selected.addEventListener("click", () => {
+                dropdown.classList.toggle("active");
+            });
+
+            options.forEach(option => {
+                option.addEventListener("click", () => {
+                    selected.innerHTML = option.innerHTML +
+                        '<span class="dropdown-arrow">▾</span>';
+                    selectedCategory = option.dataset.value;
+                    dropdown.classList.remove("active");
+                });
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove("active");
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
